@@ -1,0 +1,8 @@
+keyboard_teleop:
+  ros__parameters:
+    max_speed: 1.5
+    max_vert: 0.8
+    yaw_rate: 0.8
+    takeoff_height: 1.2
+    land_speed: 0.5
+    force_arm: false

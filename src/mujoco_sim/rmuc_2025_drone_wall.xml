@@ -1,0 +1,4 @@
+<mujoco model="rmuc_2025_drone_with_wall">
+  <include file="rmuc_2025_drone.xml"/>
+  <include file="wall_obstacle.xml"/>
+</mujoco>

@@ -1,0 +1,12 @@
+# bringup 汇总启动参数（仿真环境）。真机部署时改这里 / 用 launch 参数覆盖。
+#
+# 注意：碰撞恢复的物理参数（质量/惯量/增益/话题）在 recovery 包的
+# config/recovery_params.yaml 里单独配，仿真/真机差别最大的是那一份。
+# 这里只管"仿真基础设施"：MuJoCo 世界、PX4 目录、Agent 端口。
+
+sim:
+  world: "/data/DroneNav/src/mujoco_sim/rmuc_2025_drone.xml"   # MuJoCo 世界
+  px4_dir: "/data/DroneNav/PX4-Autopilot/build/px4_sitl_default"  # PX4 SITL build 目录
+  agent_port: 8888          # MicroXRCEAgent UDP 端口
+  px4_delay: 3.0            # PX4 相对 Agent 的启动延时(秒)
+  gui: true                 # 是否启动 MuJoCo 可视化 viewer

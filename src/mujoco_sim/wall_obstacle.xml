@@ -1,0 +1,9 @@
+<mujoco>
+  <worldbody>
+    <!-- 可选撞击目标：默认不加载，只有用 rmuc_2025_drone_wall.xml 时才生效 -->
+    <geom name="test_wall" type="box" pos="5.4 9.4 1.5" size="0.12 1.6 1.5"
+          rgba="0.85 0.25 0.25 0.9" contype="1" conaffinity="1"/>
+    <geom name="test_wall_pillar" type="box" pos="5.4 9.4 0.75" size="0.18 0.18 0.75"
+          rgba="0.6 0.6 0.6 0.9" contype="1" conaffinity="1"/>
+  </worldbody>
+</mujoco>

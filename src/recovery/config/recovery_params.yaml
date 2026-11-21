@@ -1,0 +1,46 @@
+# 碰撞恢复节点参数（仿真/真机通用，按需改这里）
+collision_recovery:
+  ros__parameters:
+    # ---- 机体 / 惯性 ----
+    mass: 2.0643            # 质量 kg
+    jx: 0.02167             # 绕 x 转动惯量
+    jy: 0.02167
+    jz: 0.04
+
+    # ---- 几何控制增益 (论文 Eq.24) ----
+    k_q: 1.0                # 姿态增益（降低恢复冲击）
+    k_p: 1.0                # 位置增益（降低恢复冲击）
+    k_dw: 0.8               # 角速度阻尼
+    k_dv: 1.5               # 线速度阻尼
+
+    # ---- 导纳让步 (论文 Eq.22~23a) ----
+    alpha: 0.5              # 能量预算权重
+    admittance_factor: 0.08  # 更保守的让步尺度
+    max_admittance_shift: 0.6  # 让步后 p_d 相对碰撞点的最大位移(m)，防止弹飞
+    recovery_shift: 0.6          # 额外远离接触点的恢复位移(m)
+    restitution: 0.2          # 接触恢复系数；已穿透/持续接触时用较小值
+
+    # ---- 推力限幅 / 恢复高度 ----
+    thrust_max_accel: 16.6  # 最大加速度(m/s^2)，用于把推力归一化到 0~1
+    min_height: 0.4         # 低于该高度不触发恢复（贴地不接管）
+
+    # ---- 触发 / 收敛 / 时序 ----
+    contact_depth_threshold: 0.0001   # 接触穿透深度阈值(m)
+    contact_timeout: 0.2              # 接触消息超时(s)，超时认为已脱离
+    cooldown: 0.5                     # 两次恢复之间的冷却(s)
+    settle_vel_threshold: 0.15        # 收敛判据：线速度
+    settle_rate_threshold: 0.2        # 收敛判据：角速度
+    settle_pos_threshold: 0.25        # 收敛判据：参考位置误差(m)
+    settle_time: 0.6                  # 满足收敛持续该秒数才结束
+    max_recover_time: 4.0             # 单次恢复最大时长(s)，超时强制交还
+    control_rate: 50.0                # 控制频率(Hz)
+
+    # ---- 话题（真机可改接触源等） ----
+    odometry_topic: /fmu/out/vehicle_odometry
+    status_topic: /fmu/out/vehicle_status_v1
+    contact_topic: /mujoco/contacts        # 仿真：MuJoCo 接触；真机换成你的碰撞源
+    setpoint_topic: /recovery/setpoint     # 恢复期间发布给飞行节点的姿态+推力兜底
+    thrust_setpoint_topic: /recovery/thrust_setpoint
+    torque_setpoint_topic: /recovery/torque_setpoint
+    recovery_status_topic: /recovery/status
+    reset_topic: /mujoco/reset
